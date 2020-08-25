@@ -12,10 +12,27 @@ This folder contains two folders: "main_text_scenareio1" and "appendix". Each fo
 ##  main_text
 The main text analyzes the environmental switching scenario 1: switching only resource supplies. In this folder, "main_2sp_simulation.c" runs two-species dynamics where species 1 grows faster than species 2 but the rest parameter values are identical. Then, you will pobtain following folders.
 
-To plots the Figs. 2 and 3 in the main text, brbrbr
+To plots the Figs. 2 and 3 in the main text, use "main_figures.py".
 
-Each folder "deathDelta", where Delta represents toxin sensitivity, has two folders: "OneConsumer" and "TwoConsumer". In "OneConsumer", you can see the probabilities that species 1 goes extinct in mono-culture over the switching rate. In "TwoConsumer", you will obtain the probabilities that both species 1 and 2 go extinct ("TwoConsumer_BothExtinction_model1_competitor1.csv"), that two species coexist ("TwoConsumer_Coexistence_model1_competitor1.csv"), that species 2 excludes species 1 ("TwoConsumer_CompetitiveExclusion_model1_competitor1.csv"), and that species 1 goes extinct in co-culture ("TwoConsumer_Extinction_model1_competitor1.csv"). In each file each row corresponds to the different species 2 (ratio of maximum growth rates mu1/mu2=1.1, 1.2, ..., 1.5) while each column represents the different switching rate. Note that we used only the first row in the manuscript.
+Each folder named "deathDelta", where Delta represents toxin sensitivity, has two folders: "OneConsumer" and "TwoConsumer". In "OneConsumer", you can see the probabilities that species 1 goes extinct in mono-culture over the switching rate. In "TwoConsumer", you will obtain the probabilities that both species 1 and 2 go extinct ("TwoConsumer_BothExtinction_model1_competitor1.csv"), that two species coexist ("TwoConsumer_Coexistence_model1_competitor1.csv"), that species 2 excludes species 1 ("TwoConsumer_CompetitiveExclusion_model1_competitor1.csv"), and that species 1 goes extinct in co-culture ("TwoConsumer_Extinction_model1_competitor1.csv"). In each file each row corresponds to the different species 2 (ratio of maximum growth rates mu1/mu2=1.1, 1.2, ..., 1.5) while each column represents the different switching rate. Note that we used only the first row in the manuscript.
 
+In the folder of "Correlation", you can access the summury of difference in extinctionprobabilities of species 1 in the three different switching scenarios and four different resource supplies in the switching scenario 1.
+
+## appendix
+In this folder, you can see codes and data used in Appendices 3, 4, and 5. By using the codes in deiveristy_analysis, you can plot figures in Appendix 6.
+
+### Appendix3_constant_env
+Write later
+
+### Appendix4_changing_scenario
+In this scenario, you can see the results of different environmental switching scenarios: scenario2 (switching toxin supplies) and scenario3 (switching both resource and toxin supplies). In each scenario, you can see (i) extinction probabilities of species 1 in mono-culture, (ii) probabilities that both species go extinct, (iii) probabilities that two species xoexist, (iv) probabilities that species 2 excludes species 1, and (v)species 1's extinction probabiliries in co-culture over the switching rate.
+
+Running simulations and plotting results in these scenarios can be done by modifying "main_2sp_simulation.c" and "main_figures.py".
+
+### Appendix5_change_supply
+In this folder, you can see the results of different resource supplies in scernario 1: more abundant resource supply (large_xmax), less abundant resource supply (small_xmax), more scarce resource supply (small_xmin), and less scarce resource supply (large_xmin). In each scenario, you can see (i) extinction probabilities of species 1 in mono-culture, (ii) probabilities that both species go extinct, (iii) probabilities that two species xoexist, (iv) probabilities that species 2 excludes species 1, and (v)species 1's extinction probabiliries in co-culture over the switching rate.
+
+Running simulations and plotting results in these scenarios can be done by modifying "main_2sp_simulation.c" and "main_figures.py".
 
 # diversity_analysis
 In this file, you can see four programming codes (incl. "MT.h") and two data folders (beta_diversity and Species_richness). Each folder contains the python codes that plots the results 
