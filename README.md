@@ -22,7 +22,13 @@ In the folder of "Correlation", you can access the summury of difference in exti
 In this folder, you can see codes and data used in Appendices 3, 4, and 5. By using the codes in deiveristy_analysis, you can plot figures in Appendix 6.
 
 ### Appendix3_constant_env
-Write later
+In this folder, you see the results when there is no envio0rnmental switching. For scenario 1, we show the cases when the resource supply is fixed as scarce, mean or abundant. For scenarios 2 and 3, we show only the cases of mild environments (scarce toxin supply for sceanrio 2, and abundant resource and scarce toxin supllies in scenario 3).
+
+In each scenario, you can see the probabilities (i) that species 1 goes extinc in mono-culture ("OneConsumer_Extinction_), (ii) that species 1 goes extinct in co-culture with species 2 ("TwoConsumer_ExtinctionofSpeciess1"), (iii) of diffrence from (i) to (ii) ("Diff_extinction"), (iv) that both species 1 and 2 go extinct ("BothExtinction"), and (v) that species 2 excludes species 1 (ComeptitiveExclusion). 
+
+PREPARE the SIMILAR CSV FILES FOR the RESR SCENARIOS
+
+
 
 ### Appendix4_changing_scenario
 In this scenario, you can see the results of different environmental switching scenarios: scenario2 (switching toxin supplies) and scenario3 (switching both resource and toxin supplies). In each scenario, you can see (i) extinction probabilities of species 1 in mono-culture, (ii) probabilities that both species go extinct, (iii) probabilities that two species xoexist, (iv) probabilities that species 2 excludes species 1, and (v)species 1's extinction probabiliries in co-culture over the switching rate.
