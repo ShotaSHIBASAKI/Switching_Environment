@@ -10,11 +10,39 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy as sp
 from scipy import stats
+import pymc3 as pm
+from scipy.stats import dirichlet
 
+def SmaplingDIr(obs, index):
+    """
+    Estimating 95% Heighest posterior deinsty (HDP) in Dirichlet distribution
+
+    Parameters
+    ----------
+    obs : 1D array
+        number of obseraving each event.
+    index : int
+        event to analyze its occuring probability.
+
+    Returns
+    -------
+    95% HPD of occuring event index
+    """
+    a=np.ones(np.size(obs)) # prior is uniform
+    a+=obs
+    #posterior = dirichlet(a)
+    sample=dirichlet.rvs(a, size=10000)#monte carlo
+    sample_index=sample[:, index] # focus on index alone
+    """
+    plt.hist(sample_index)
+    plt.xlim(0,1)
+    plt.show()
+    """
+    return pm.stats.hpd(sample_index)
 
 #Fig.2A: different in extinction probabilities from mono- to co-cultures
 #Fig.2B: some exaples  from Fig2A
-def Fig2AB (model, val):
+def Fig2AB (model, val=0):
     # model: scenario of environmental switching:  1,2,or 3
     # val; which species 2 to comp@ete with: in the main text, choose 0. 
     # You can also chose val =1,..., 4 for more sloer grower
@@ -64,6 +92,7 @@ def Fig2AB (model, val):
     plt.show()
     
     #plot Fig.2B
+    
     rate=np.linspace(-5, 3, 9)
     col_list=['#8dd3c7', '#fb8072', '#bebada', '#80b1d3']
     lab_list=['sensitivity 0.1', 'sensitivity 0.2', 
@@ -72,6 +101,19 @@ def Fig2AB (model, val):
     for i in range(len(example)):
         plt.plot(rate, diff[example[i], :], color=col_list[i], label=lab_list[i],
                 marker='D', linewidth=2)
+        #Calculate 95% HDP for each dot using Dirichlet (or beta) distribution
+        #As we have 10**5 data, 95% HDP are unobservable in the figure
+        for j in range(np.size(rate)):
+            ext1=one_ext[example[i],j] # probs of extinction and persistence 
+            obs1=np.array([ext1, 1-ext1])*10**5 # total observation is 10**5 times
+            ext2=two_ext[example[i],j]
+            obs2=np.array([ext2,1-ext2])*10**5
+            #estimate 95%HDI 
+            sample1=dirichlet.rvs(obs1+1, size=10000)
+            sample2=dirichlet.rvs(obs2+1, size=10000)
+            sample_diff=sample1[:,0]-sample2[:, 0]
+            hdp_l, hdp_h=pm.stats.hpd(sample_diff)
+            plt.vlines(rate[j],hdp_l, hdp_h, color=col_list[i])
     plt.xlabel('$\log_{10}$'+'switching rate',fontsize=20)
     plt.ylabel('prob. of competitive exclusion',fontsize=20)
     plt.xticks(fontsize=16, ticks=[-4, -2, 0, 2])
@@ -85,7 +127,7 @@ def Fig2AB (model, val):
 
 #Fig.2C: probabilities of competitve exclusion
 #Fig.2D: some exaples from Fig.2C
-def Fig2CD (model, val):
+def Fig2CD (model, val=0):
     # model: scenario of environmental switching:  1,2,or 3
     # val; which species 2 to comp@ete with: in the main text, choose 0. 
     # You can also chose val =1,..., 4 for more sloer grower
@@ -138,6 +180,22 @@ def Fig2CD (model, val):
     for i in range(np.size(Data, 0)):
         plt.plot(toxin, Data[i, :], color=col_list[i], label=lab_list[i],
                 marker='D', linewidth=2)
+        """
+        Plot 95% HDP. Again, HDPs are too samll to see in the plot
+        For simplicity, we use beta distribution to see the probability 
+        that competitive exclusion of sp1 by sp2 happens.
+        We may also use Dirichlet distribution instead by considering 
+         1. both species extinction
+         2. both species persistnce
+         3. competitive exclusion of sp1 by sp2 and
+         4. competitive exclusion of sp2 by sp1
+        """
+        for j in range(np.size(toxin)):
+            comp=Data[i,j]
+            a=np.array([comp, 1-comp])*10**5 # total number of simulations is 10**5
+            sample=dirichlet.rvs(a+1, size=10000)
+            hdp_l, hdp_h=pm.stats.hpd(sample[:,0])
+            plt.vlines(toxin[j],hdp_l, hdp_h, color=col_list[i])
     plt.xlabel('toxin sensitivity',fontsize=20)
     plt.ylabel('prob. of competitive exclusion',fontsize=20)
     plt.xticks(fontsize=16)
@@ -183,6 +241,22 @@ def Fig3A():
     for i in range(np.size(R_array)):
         plt.plot(death, CompExcl[:, i], color=col_list[i], label=lab_list[i],
                 marker='D', linewidth=2)
+        """
+        Plot 95% HDP. Again, HDPs are too samll to see in the plot
+        For simplicity, we use beta distribution to see the probability 
+        that competitive exclusion of sp1 by sp2 happens.
+        We may also use Dirichlet distribution instead by considering 
+         1. both species extinction
+         2. both species persistnce
+         3. competitive exclusion of sp1 by sp2 and
+         4. competitive exclusion of sp2 by sp1
+        """
+        for j in range(np.size(death)):
+            comp=CompExcl[j,i]
+            a=np.array([comp, 1-comp])*10**5 # total number of simulations is 10**5
+            sample=dirichlet.rvs(a+1, size=10000)
+            hdp_l, hdp_h=pm.stats.hpd(sample[:,0])
+            plt.vlines(death[j],hdp_l, hdp_h, color=col_list[i])
     plt.xlabel('toxin sensitivity',fontsize=20)
     plt.ylabel('prob. of competitive exclusion',fontsize=20)
     plt.xticks(fontsize=16)
