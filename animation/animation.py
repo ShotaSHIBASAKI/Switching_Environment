@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 def data_generate2(nu):
     #for two consumer model
+    # this code analyzes the csv files produced by main.c
+    # and then, provides the summary csv files
     time=200
     trial=1000
 
