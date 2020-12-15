@@ -67,7 +67,7 @@ def GifAnimation(data, number_of_frames, col_list, xlabel, gname):
         density=True, alpha=0.5, label='species 2')
         plt.xlim(left=0, right=180)
         plt.xlabel(xlabel, fontsize=16)
-        plt.ylabel('count', fontsize=16)
+        plt.ylabel('probability', fontsize=16)
         plt.ylim(bottom=0, top=0.15)
         plt.title(str('time %d' %(num)))
         plt.legend(loc='upper right')
