@@ -15,7 +15,9 @@ from scipy.stats import dirichlet
 
 def SmaplingDIr(obs, index):
     """
-    Estimating 95% Heighest posterior deinsty (HDP) in Dirichlet distribution
+    Estimating 95% Heighest posterior deinsty (HDP) in Dirichlet distribution.
+    Although observed data follows a multinomial-distribution,
+    we can also use the cases when the data are binary (in such cases,DIrichlet is Beta dist)
 
     Parameters
     ----------
@@ -29,15 +31,16 @@ def SmaplingDIr(obs, index):
     95% HPD of occuring event index
     """
     a=np.ones(np.size(obs)) # prior is uniform
-    a+=obs
+    a+=obs  # posterior after observing data
     #posterior = dirichlet(a)
-    sample=dirichlet.rvs(a, size=10000)#monte carlo
-    sample_index=sample[:, index] # focus on index alone
+    sample=dirichlet.rvs(a, size=10000)#sampleing parameter values from posterior distirbution
+    sample_index=sample[:, index] # focus on parameter[index] alone
     """
     plt.hist(sample_index)
     plt.xlim(0,1)
     plt.show()
     """
+    # calculate 95% HDI
     return pm.stats.hpd(sample_index)
 
 #Fig.2A: different in extinction probabilities from mono- to co-cultures
