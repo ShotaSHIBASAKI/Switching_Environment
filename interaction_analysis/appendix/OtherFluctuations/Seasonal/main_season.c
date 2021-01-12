@@ -3,7 +3,7 @@
 //  resource, toxin, and species model
 //  resource  switching model 1
 //  Four (NOT Two) environmental states and seasonal change (x1->x2->x3->x4->x1) with stochastic durations
-//  Createdon 2. 11. 19
+//  Createdon 12. Jan. 2021
 //
 //
 
