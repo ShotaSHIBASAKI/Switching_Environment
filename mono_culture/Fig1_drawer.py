@@ -55,19 +55,11 @@ def main(model, val=0):
     for i in range(np.size(d_array)):
         death=d_array[i]
         # In absence of species 2
-        path=str('./death%.1f//Model%d/OneConsumer' %(death, model))
-        os.chdir(path)
-        data=np.loadtxt(str('OneConsumer_Extinction_model%d.csv'%(model)),
+        data=np.loadtxt(str('OneConsumer_Extinction_model%d_death%d.csv'%(model, 10*death)),
                         delimiter=',', skiprows=1)
         mono_ext[i, :]=data
-        os.chdir('../../../')
-        
-    #plot figures
-    
-    plt.show()
-    
-    #plot Fig.1A
-    
+       
+    #plot Fig.1A: extinction probability
     rate=np.linspace(-5, 3, 9)
     col_list=['#8dd3c7', '#fb8072', '#80b1d3']
     
