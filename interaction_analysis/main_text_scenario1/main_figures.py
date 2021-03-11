@@ -302,6 +302,7 @@ def Fig4D(peak_harsh, peak_mean, peak_mild):
     
     Plot the distance of peaks and the range of death rate with non-monotonic effect of environmental siwthcing rate
     Ex. three switching scenarios + four chaging resource supply
+    See ./interaction_analysis/appendix/Appendix4_change_scenario and Appendix5_change_supply to obtain these values
     """
     Non_Monotonic=np.zeros([3, 7])  
     # 1st dim: mean-harsh, mild-mean, mild-harsh
