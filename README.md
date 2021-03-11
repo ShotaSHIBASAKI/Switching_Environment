@@ -5,6 +5,8 @@ Here, you can access the programming codes (in Python and C language) and csv fi
 To run C language codes, you need to have "Mt.h" file.
 
 
+# mono_extinction
+This folder contains a python code to plot Fig 2 and data files in csv used in Fig2. The mono-culture simulation is implemented using "main_2sp_simulation.c" but with modification such that initial species 2's abundance is 0. Three folders (death2 , death 5, death10) contain csv files that show the abundances of species 1, resource, and toxin as well as the enviornmental condition at the end of each simulation at varisou switching rate.
 
 # interaction_analysis
 This folder contains two folders: "main_text_scenareio1" and "appendix". Each folder contains codes for simulations and plotting results, as well as summary data used in the main text or appendix.
