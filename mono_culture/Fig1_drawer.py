@@ -87,14 +87,14 @@ def main(model, val=0):
     
     # plotting abundance distributions (Fig 1B--D)
     for i in range(len(example)):
-        path=str('./death%.1f//Model%d/OneConsumer' %(d_array[example[i]], model))
+        path=str('./death%.1f' %(d_array[example[i]], model))
         os.chdir(path)
         df=pd.DataFrame({})
         for j in range(np.size(nu_array)):
             fname=str('OneConsumerRTC_switching10^%d_last.csv' %(nu_array[j]))
             data=np.loadtxt(fname, delimiter=',', skiprows=1, dtype=int)[:,1]
             df[str('%d' %(nu_array[j]))]=data
-        os.chdir('../../../')
+        os.chdir('../')
         
         # plot
         ax=sns.violinplot(data=df, color=col_list[i])
