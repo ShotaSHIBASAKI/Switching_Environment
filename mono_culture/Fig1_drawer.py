@@ -87,7 +87,7 @@ def main(model, val=0):
     
     # plotting abundance distributions (Fig 1B--D)
     for i in range(len(example)):
-        path=str('./death%.1f' %(d_array[example[i]], model))
+        path=str('./death%df' %(10*d_array[example[i]]))
         os.chdir(path)
         df=pd.DataFrame({})
         for j in range(np.size(nu_array)):
