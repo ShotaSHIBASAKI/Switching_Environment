@@ -6,7 +6,7 @@ To run C language codes, you need to have "Mt.h" file.
 
 
 # mono_extinction
-This folder contains a python code to plot Fig 2 and data files in csv used in Fig2. The mono-culture simulation is implemented using "main_2sp_simulation.c" but with modification such that initial species 2's abundance is 0. Three folders (death2 , death 5, death10) contain csv files that show the abundances of species 1, resource, and toxin as well as the enviornmental condition at the end of each simulation at varisou switching rate.
+This folder contains a python code to plot Fig 2 in the main text (Fig2_drawer.py) and data files in csv used in Fig2. The mono-culture simulation is implemented using "main_2sp_simulation.c" in folder "interaction_analysis/main_text_scenario1", but one needs small modification such that initial species 2's abundance is 0. Three folders (death2 , death 5, death10) contain csv files that show the abundances of species 1, resource, and toxin as well as the enviornmental condition at the end of each simulation at varisou switching rate. These files are used to show distibutions of species 1's abundance at the end of simulations.
 
 # interaction_analysis
 This folder contains two folders: "main_text_scenareio1" and "appendix". Each folder contains codes for simulations and plotting results, as well as summary data used in the main text or appendix.
@@ -14,7 +14,7 @@ This folder contains two folders: "main_text_scenareio1" and "appendix". Each fo
 ##  main_text
 The main text analyzes the environmental switching scenario 1: switching only resource supplies. In this folder, "main_2sp_simulation.c" runs two-species dynamics where species 1 grows faster than species 2 but the rest parameter values are identical. Then, you will pobtain following folders.
 
-To plots the Figs. 2 and 3 in the main text, use "main_figures.py".
+To plots the Figs. 3 and 4 in the main text, use "main_figures.py".
 
 Each folder named "deathDelta", where Delta represents toxin sensitivity, has two folders: "OneConsumer" and "TwoConsumer". In "OneConsumer", you can see the probabilities that species 1 goes extinct in mono-culture over the switching rate. In "TwoConsumer", you will obtain the probabilities that both species 1 and 2 go extinct ("TwoConsumer_BothExtinction_model1_competitor1.csv"), that two species coexist ("TwoConsumer_Coexistence_model1_competitor1.csv"), that species 2 excludes species 1 ("TwoConsumer_CompetitiveExclusion_model1_competitor1.csv"), and that species 1 goes extinct in co-culture ("TwoConsumer_Extinction_model1_competitor1.csv"). In each file each row corresponds to the different species 2 (ratio of maximum growth rates mu1/mu2=1.1, 1.2, ..., 1.5) while each column represents the different switching rate. Note that we used only the first row in the manuscript.
 
@@ -38,7 +38,12 @@ Running simulations and plotting results in these scenarios can be done by modif
 ### Appendix5_change_supply
 In this folder, you can see the results of different resource supplies in scernario 1: more abundant resource supply (large_xmax), less abundant resource supply (small_xmax), more scarce resource supply (small_xmin), and less scarce resource supply (large_xmin). In each scenario, you can see (i) extinction probabilities of species 1 in mono-culture, (ii) probabilities that both species go extinct, (iii) probabilities that two species xoexist, (iv) probabilities that species 2 excludes species 1, and (v)species 1's extinction probabiliries in co-culture over the switching rate.
 
+## OtherFlucutuations
+This folder contains two results when we implement environment fluctuations other than symmetric switching between two environmental states (harsh and mild): asymmetric switching and cyclic flucutuaion. In "Asymmetric" folder, we can see two scenarios: the harsh environments tend to continues longer (see folder 1) and the mild environment continues longer (folder 2). The containts of each folder are similar to Appendix4. In "FourState" folder we can see the results when we have four environmental states and the enviornmental condition flucutuates such that 1->2->3->4->1->... with a rate \nu.
+
 Running simulations and plotting results in these scenarios can be done by modifying "main_2sp_simulation.c" and "main_figures.py".
+
+
 
 # diversity_analysis
 In this file, you can see four programming codes (incl. "MT.h") and two data folders (beta_diversity and Species_richness). Each folder contains the python codes that plots the results 
