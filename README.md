@@ -23,7 +23,7 @@ In the folder of "Correlation", you can access the summury of difference in exti
 ## appendix
 In this folder, you can see codes and data used in Appendices 1, 2, 3, 4, and 5. 
 By using the codes in deiveristy_analysis, you can plot figures in Appendix 6.
-To plot the figures in appoendix, use "appendix_figure.py" or modify "main_figures.py", "divertsity.py", or "richness.py".
+To plot the figures in appoendix, use "appendix_figure.py" or "main_figures.py".
 
 ### Appendix3_constant_env
 In this folder, you see the results when there is no envio0rnmental switching. For scenario 1, we show the cases when the resource supply is fixed as scarce, mean or abundant. For scenarios 2 and 3, we show only the cases of mild environments (scarce toxin supply for sceanrio 2, and abundant resource and scarce toxin supllies in scenario 3).
@@ -55,13 +55,12 @@ In this file, you can see four programming codes (incl. "MT.h") and two data fol
 "competitive_prob.py" analyzes the probability of competitive exclusion (i.e., probability that inferior species in the mean feild excludes the superior species) in two-species scenarios. As a result, you will get figures like Fig.4A in the main text.
 
 
-## beta diversity analysis
-"beta_diversity" includes "divertsity.py" and 25 csv files ("beta_div_speciesN_deathDelta.csv"). The python code calculates beta diveristy (and alpha and gamma daviersities if needed) and plot the violin plots and/or distribution of beta diversity. You can get figures like Figs.4B and D in the main text.
+## diversites
+"beta_diversity" includes alpha, beta, and gamma diversities over the number of species in a community (2,4, ..., 10), and mean toxin sensitivity (0.1,0.2, 0.4, 0.6, 1.0). Each csv file contains alpha, beta, or gamma diversities of 100 communities (row) over the switching rate (column). From these results, we can generate Figs. 5, A3, adn A12.
 
-"beta_div_speciesN_deathDelta.csv", where N is the number of species and Delta is 10x mean toxin sensitivity, contains the beta diversities used in the main text. Each row corresponds each communities while each column represents each switching rate. 
 
 
 ## species richenss analysis
-"Species_richness" contains "richness.py" and 25 csv files ("Prop_richness_speciesN_deathDelta.csv"). The python codes plots the species richness (number of persisting species) of N species communities. You can get figures like Figs.4 C adn E.
+"Species_richness" contains "richness.py" and 25 csv files ("Prop_richness_speciesN_deathDelta.csv"). The python codes plots the species richness (number of persisting species) of N species communities. You can get figures like Figs.5C adn E, and Fig. A13.
 
 "Prop_richness_speciesN_deathDelta.csv", where N is the number of species and Delta is 10x mean toxin sensitivity, contains the distributions of species richness used in the main text. Each row corresponds to each switching rate while each column represents each species richness S (S=0,1,2,...,N). 
