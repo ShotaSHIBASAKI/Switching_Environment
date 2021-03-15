@@ -261,6 +261,7 @@ def Fig4AC():
 #------------------------------------------------    
 
 #Fig.4D: Correlation of non-monotonicity and distances between critical toxin sensitivities
+#Update: this figrue has been moved to appendix in the latest manuscript
 def NonMonotonicity(data):
     sign_prev=0
     for i in range(np.size(data)-1):
@@ -344,6 +345,11 @@ def Fig4D(peak_harsh, peak_mean, peak_mild):
     plt.scatter(peak_mild-peak_harsh, Non_Monotonic[2, :], s=100,
                marker='x', color='grey', label='harsh - mild')
     print(corr, p_val)
+    
+    # add arrow to show the result in the main text
+    plt.annotate(text="", xy=[0.35, 2.5], xytext=[0.45, 3.5], 
+                 arrowprops=dict(width=2, facecolor='k', 
+                                edgecolor='k'))
     plt.xlabel('distance between critical values', fontsize=20)
     plt.ylabel('non-monotonicity', fontsize=20)
     plt.xticks(fontsize=16)
