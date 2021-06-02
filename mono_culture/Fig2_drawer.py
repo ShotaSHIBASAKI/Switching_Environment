@@ -59,7 +59,7 @@ def main(model, val=0):
                         delimiter=',', skiprows=1)
         mono_ext[i, :]=data
        
-    #plot Fig.1A: extinction probability
+    #plot Fig.2A: extinction probability
     rate=np.linspace(-5, 3, 9)
     col_list=['#8dd3c7', '#fb8072', '#80b1d3']
     
@@ -85,26 +85,33 @@ def main(model, val=0):
     plt.savefig('MonoExtinction.pdf',bbox_inches='tight',pad_inches=0.05)
     plt.show()
     
-    # plotting abundance distributions (Fig 1B--D)
+    # plotting abundance distributions (Fig 2B--D)
     for i in range(len(example)):
         path=str('./death%df' %(10*d_array[example[i]]))
         os.chdir(path)
         df=pd.DataFrame({})
         for j in range(np.size(nu_array)):
             fname=str('OneConsumerRTC_switching10^%d_last.csv' %(nu_array[j]))
-            data=np.loadtxt(fname, delimiter=',', skiprows=1, dtype=int)[:,1]
+            data=np.loadtxt(fname, delimiter=',', skiprows=1)[:,1]
+            for k in range(np.size(data)):
+                if data[k]<1:
+                    data[k]=-1 # avoiding non-positive value in log
+                else:
+                    data[k]=np.log10(data[k]) # log transformation
             df[str('%d' %(nu_array[j]))]=data
+            
         os.chdir('../')
         
         # plot
-        ax=sns.violinplot(data=df, color=col_list[i])
+        ax=sns.violinplot(data=df, color=col_list[i], scale='width') # scale=width is good to show extinction
         #ax=sns.stripplot(data=df, color='.2')
         ax.set_xlabel('$\log_{10}$'+'switching rate',fontsize=20)
         ax.set_ylabel('species 1 abundance',fontsize=20)
-        plt.ylim(-1, 200)
+        plt.ylim(-1.05, 2.5)
         plt.xticks(fontsize=16, ticks=[1,3,5,7])
+        plt.yticks(fontsize=16, ticks=[-1, 0, 1, 2],labels=[0, 1, 10, 100])
         tname=str('sensitivity %.1f' %(d_array[example[i]]))
-        plt.text(x=5, y=175,s=tname, fontsize=16)
+        plt.text(x=5, y=2.2,s=tname, fontsize=16)
         plt.savefig(str('abundance_sensitivity%d.pdf' %(10*d_array[example[i]])),
                  bbox_inches='tight',pad_inches=0.05)
         plt.show()
