@@ -159,7 +159,7 @@ def Fig3CD (model, val=0):
         os.chdir('../../')
     #plot figures
     
-    #plot Fig.2C
+    #plot Fig.3C
     ax1 = plt.subplot(111)
     heatmap1=ax1.pcolor(comp_exc, cmap='Blues',vmin=0)
     #heatmap=ax.pcolor(comp_array, cmap=plt.cm.bwr,vmin=0)
@@ -175,18 +175,20 @@ def Fig3CD (model, val=0):
                 bbox_inches='tight', pad_inches=0.05)
     plt.show()
     
-    #plot Fig.2D
+    #plot Fig.3D
     toxin=np.linspace(0.1, 1.0, 10)
     Data=np.zeros([3, 10])
     Data[0, :]= comp_exc[:, 0] # nu=10^-5
     Data[1, :]= comp_exc[:, 4] # nu =0.1
     Data[2, :]= comp_exc[:, -1] # nu=10^3
     #plot the data
-    col_list=['#8dd3c7', '#fb8072', '#80b1d3']
+    #col_list=['#8dd3c7', '#fb8072', '#80b1d3']
+    col_list=['grey', 'slategrey', 'black']
+    line_list=['dotted', 'dashed', 'solid']
     lab_list=['slow', 'intermediate', 'fast']
     for i in range(np.size(Data, 0)):
         plt.plot(toxin, Data[i, :], color=col_list[i], label=lab_list[i],
-                marker='D', linewidth=2)
+                 linestyle=line_list[i], marker='D', linewidth=2)
         """
         Plot 95% HDP. Again, HDPs are too samll to see in the plot
         For simplicity, we use beta distribution to see the probability 
@@ -261,7 +263,6 @@ def Fig4AC():
 #------------------------------------------------    
 
 #Fig.4D: Correlation of non-monotonicity and distances between critical toxin sensitivities
-#Update: this figrue has been moved to appendix in the latest manuscript
 def NonMonotonicity(data):
     sign_prev=0
     for i in range(np.size(data)-1):
@@ -303,7 +304,6 @@ def Fig4D(peak_harsh, peak_mean, peak_mild):
     
     Plot the distance of peaks and the range of death rate with non-monotonic effect of environmental siwthcing rate
     Ex. three switching scenarios + four chaging resource supply
-    See ./interaction_analysis/appendix/Appendix4_change_scenario and Appendix5_change_supply to obtain these values
     """
     Non_Monotonic=np.zeros([3, 7])  
     # 1st dim: mean-harsh, mild-mean, mild-harsh
@@ -345,7 +345,6 @@ def Fig4D(peak_harsh, peak_mean, peak_mild):
     plt.scatter(peak_mild-peak_harsh, Non_Monotonic[2, :], s=100,
                marker='x', color='grey', label='harsh - mild')
     print(corr, p_val)
-    
     # add arrow to show the result in the main text
     plt.annotate(text="", xy=[0.35, 2.5], xytext=[0.45, 3.5], 
                  arrowprops=dict(width=2, facecolor='k', 
