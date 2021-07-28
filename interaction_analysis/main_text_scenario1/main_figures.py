@@ -213,12 +213,41 @@ def Fig3CD (model, val=0):
     plt.savefig('CompetitiveExclusion_furthest.pdf',bbox_inches='tight',pad_inches=0.05)
     plt.show()
 #-------------------------------------------
+def Fig4():
+    # plot the sample dynamics where exclusion of fittest happens
+    fname_list=['./TimeSeries_switching10^-3_delta0.1_trial2.csv', './TimeSeries_switching10^-1_delta0.2_trial0.csv', 
+                './TimeSeries_switching10^1_delta0.4_trial18.csv']
+    for i in range(len(fname_list)):
+        df=pd.read_csv(fname_list[i])
+        df=df.rename(columns={' resource': 'resource',' consumer1': 'species1',
+                 ' consumer2': 'species2',' toxin': 'toxin',
+                 ' environment': 'environment'})
+        df_good=df[df.environment==1]
+        df_bad=df[df.environment==-1]
+        plt.plot(df.time, df.resource, label='resource', color='#fdb462')
+        plt.plot(df.time, df.toxin, label='toxin', color='#80b1d3')
+        plt.plot(df.time, df.species1, label='species 1', color='#8dd3c7')
+        plt.plot(df.time, df.species2, label='species 2',color='#b3de69')
+
+        plt.legend(bbox_to_anchor=(0.5, 1.15), loc='center', ncol=2, fontsize=18)
+        plt.scatter(df_bad.time, 0*df_bad.time, color='k', marker='s', s=30)
+        plt.scatter(df_good.time, 0*df_good.time, color='w', marker='s', s=30)
+        plt.xlabel('time', fontsize=20)
+        plt.xticks(fontsize=16)
+        plt.ylabel('amount or abundances', fontsize=20)
+        plt.xlim(0, 205)
+        plt.ylim(0, 160)
+        plt.yticks(fontsize=16)
+        plt.text( x=25,y=145, s=str("nu = 10^%d, delta=%.1f" %(-1, 0.2)),fontsize=20)
+        gname=str('Ex_exclusion%d.pdf' %(i))
+        plt.savefig(gname, bbox_inches='tight',pad_inches=0.05)
+        plt.show()
+    
 
 
-
-
-#Fig.4A-C: both extinction and exclusion of fittest without EFs
-def Fig4AC():
+#--------------------------------
+#Fig.5A-C: both extinction and exclusion of fittest without EFs
+def Fig5AC():
    os.chdir('../appendix/Appendix3_constant_env/scenario1')
    CompExcl=np.loadtxt('CompetitiveExclusion_model1.csv',
                         delimiter=',', skiprows=1)
@@ -288,8 +317,9 @@ def Number_NonMonotonic(start, end, Data):
     return counter
         
     
-def Fig4D(peak_harsh, peak_mean, peak_mild):
+def FigA14(peak_harsh, peak_mean, peak_mild):
     """
+    This figure was preivously shown in the main text, but in the latest, they are showin in Appendix.
     Need the following three one-dim array that contains critical toxin 
     sensitivities in each scenario without enviornmental scenario
     ----------
