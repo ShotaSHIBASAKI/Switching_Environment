@@ -368,7 +368,7 @@ def FigA4():
 
   
     
-def FigA6():
+def FigA8():
     os.chdir('./Appendix3_constant_env/scenario2_mild')
     comp2=np.loadtxt('CompetitiveExclusion_model2.csv', delimiter=',', skiprows=0)
     os.chdir('../scenario3_mild')
@@ -390,7 +390,7 @@ def FigA6():
 
 #--------------------
 #different resource supplies
-def FigA789():
+def FigA9to11():
     os.chdir('./Appendix5_change_supply')
     resource_list=['larger_Resource-', 'larger_Resource+',
                    'smaller_Resource-', 'smaller_Resource+']
@@ -505,7 +505,7 @@ def FigA789():
     
 #--------------------
 #other forms of enviornmental flucutuations
-def FigA10():
+def FigA12():
     os.chdir('./OtherFluctuations/Asymmetric')
     
     d_array=np.linspace(0.1, 1.0, 10) # toxin sensitivity
@@ -568,7 +568,7 @@ def FigA10():
     
     
     
-def FigA11():
+def FigA13():
     os.chdir('./OtherFluctuations/FourState')
     d_array=np.linspace(0.1, 1.0, 10) # toxin sensitivity
     nu_array=np.linspace(-5, 3, 9)  # log scale
@@ -624,3 +624,104 @@ def FigA11():
                 bbox_inches='tight', pad_inches=0.05)
     plt.show()
     
+    #------------------------------------------------    
+
+#Fig.A14: Correlation of non-monotonicity and distances between critical toxin sensitivities
+def NonMonotonicity(data):
+    sign_prev=0
+    for i in range(np.size(data)-1):
+        
+        if data[i+1]-data[i]<-0.01:
+            sign_curr=-1 # increasing
+        elif data[i+1]-data[i]>0.01:
+            sign_curr=1 #decreasing
+        else:
+            sign_curr=sign_prev
+        if sign_prev*sign_curr<-0.1:
+            # non-monotonicity
+            return 1
+        else:
+            sign_prev=sign_curr
+    #monotnic
+    return 0
+
+def Number_NonMonotonic(start, end, Data):
+    counter=0
+    for j in range(int(start)-1, int(end)):
+        counter+=NonMonotonicity(Data[j, :])
+    return counter
+        
+    
+def FigA14(peak_harsh, peak_mean, peak_mild):
+    """
+    This figure was preivously shown in the main text, but in the latest, they are showin in Appendix.
+    Need the following three one-dim array that contains critical toxin 
+    sensitivities in each scenario without enviornmental scenario
+    ----------
+    peak_harsh 
+    peak_mean 
+    peak_mild 
+    ----------
+    In the main text, the above arrays are
+    np.array([0.1, 0.3, 0.1, 0.1, 0.3, 0.1, 0.1]),
+    np.array([0.4, 0.4, 0.4, 0.9, 0.5, 0.2, 0.3]),
+    np.array([0.8, 1.1, 1.3, 1.2, 0.8, 0.3, 0.8])
+    
+    Plot the distance of peaks and the range of death rate with non-monotonic effect of environmental siwthcing rate
+    Ex. three switching scenarios + four chaging resource supply
+    """
+    Non_Monotonic=np.zeros([3, 7])  
+    # 1st dim: mean-harsh, mild-mean, mild-harsh
+    #2nd dim: each scenario
+    
+    #calculate non-monotonicity in each switchingscenario
+    model_array=np.array([1,2,3])
+
+    os.chdir('./Correlation')
+    for i in range(np.size(model_array)):
+        # non-monotonicity check
+        fname=str('DiffExtinction1_Heatmap_Model%d.csv'%(model_array[i]))
+        Data=np.loadtxt(fname, delimiter=',', skiprows=0)
+        Non_Monotonic[0, i]=Number_NonMonotonic(peak_harsh[i]*10, peak_mean[i]*10, Data)
+        Non_Monotonic[1, i]=Number_NonMonotonic(peak_mean[i]*10, min(peak_mild[i]*10,10), Data)
+        Non_Monotonic[2, i]=Number_NonMonotonic(peak_harsh[i]*10, min(peak_mild[i]*10, 10), Data)
+
+    
+   
+    tail_list=['large_xmax', 'large_xmin', 'small_xmax', 'small_xmin']
+    for j in range(np.size(tail_list)):
+        fname1='DiffExtinction1_Heatmap_Model1_'+tail_list[j]+'.csv'
+        Data=np.loadtxt(fname1, delimiter=',', skiprows=0)
+        Non_Monotonic[0, j+3]=Number_NonMonotonic(peak_harsh[j+3]*10, peak_mean[j+3]*10, Data)
+        Non_Monotonic[1, j+3]=Number_NonMonotonic(peak_mean[j+3]*10, peak_mild[j+3]*10, Data)
+        Non_Monotonic[2, j+3]=Number_NonMonotonic(peak_harsh[j+3]*10, peak_mild[j+3]*10, Data)
+       
+    
+    # scatter plot and correlation
+    corr, p_val=sp.stats.spearmanr(peak_mean-peak_harsh, Non_Monotonic[0, :])
+    plt.scatter(peak_mean-peak_harsh, Non_Monotonic[0, :], s=200,
+               marker='o', color='black', label='harsh - mean')
+    print(corr, p_val)
+    corr, p_val=sp.stats.spearmanr(peak_mild-peak_mean, Non_Monotonic[1, :])
+    plt.scatter(peak_mild-peak_mean, Non_Monotonic[1, :], s=100,
+               marker='D', color='dimgray', label='mean - mild')
+    print(corr, p_val)
+    corr, p_val=sp.stats.spearmanr(peak_mild-peak_harsh, Non_Monotonic[2, :])
+    plt.scatter(peak_mild-peak_harsh, Non_Monotonic[2, :], s=100,
+               marker='x', color='grey', label='harsh - mild')
+    print(corr, p_val)
+    # add arrow to show the result in the main text
+    plt.annotate(text="", xy=[0.35, 2.5], xytext=[0.45, 3.5], 
+                 arrowprops=dict(width=2, facecolor='k', 
+                                edgecolor='k'))
+    plt.xlabel('distance between critical values', fontsize=20)
+    plt.ylabel('non-monotonicity', fontsize=20)
+    plt.xticks(fontsize=16)
+    plt.yticks(fontsize=16)
+    plt.legend(loc='lower center', bbox_to_anchor=(.5, 1.1), ncol=3, fontsize=20)  
+    plt.savefig('DistancePeak_Non_monotonicity_ver2.pdf',bbox_inches='tight',pad_inches=0.05)
+    plt.show()
+    
+    print(peak_mean-peak_harsh, Non_Monotonic[0, :])
+    print(peak_mild-peak_mean, Non_Monotonic[1, :])
+    print(peak_mild-peak_harsh, Non_Monotonic[2, :])
