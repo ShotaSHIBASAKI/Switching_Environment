@@ -69,6 +69,9 @@ In this file, you can see four programming codes (incl. "MT.h") and two data fol
 # Appendix 2.py
 This code prducces two figures (Figs. A5 and A6) in Appendix 2 (related to the scenarios in the absnece of demographic noise but the presence of the enviornmental switching).
 
+# Apendix7.ipynb
+This notebook shows how we performed the analysis in Appendix 7: (1) sub-sampling species from ten species communities to calculate the exclusion of the fittest in each pair, and (2) quantifiing the similarity between the mean probability of exclusion of the fittest and beta diversity of the whole community. 
+
 # NoToxin
 This folder contains the data where species do not interact with toxin (i.e., toxin sensitivity = 0), which is equivalent with the cases wehre we remove the toxin from our scenario. Then, one can produce Fig. A22. One will see that no toxin shows quantitatively similar results with toxin sensitivity =0.1.
 
