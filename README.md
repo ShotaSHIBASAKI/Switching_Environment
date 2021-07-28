@@ -64,3 +64,13 @@ In this file, you can see four programming codes (incl. "MT.h") and two data fol
 "Species_richness" contains "richness.py" and 25 csv files ("Prop_richness_speciesN_deathDelta.csv"). The python codes plots the species richness (number of persisting species) of N species communities. You can get figures like Figs.5C adn E, and Fig. A13.
 
 "Prop_richness_speciesN_deathDelta.csv", where N is the number of species and Delta is 10x mean toxin sensitivity, contains the distributions of species richness used in the main text. Each row corresponds to each switching rate while each column represents each species richness S (S=0,1,2,...,N). 
+
+
+# Appendix 2.py
+This code prducces two figures (Figs. A5 and A6) in Appendix 2 (related to the scenarios in the absnece of demographic noise but the presence of the enviornmental switching).
+
+# NoToxin
+This folder contains the data where species do not interact with toxin (i.e., toxin sensitivity = 0), which is equivalent with the cases wehre we remove the toxin from our scenario. Then, one can produce Fig. A22. One will see that no toxin shows quantitatively similar results with toxin sensitivity =0.1.
+
+# Neutral 
+In this folder, we can obtain the data where two species are identical except for their label (see Fig. A21). In addition, the analysis of the neutral scenario can be used to see how the initial abundance of species affects the extinction probability in mono-culture by assuming that two species are labled as an ideintical species (Fig.A20).
