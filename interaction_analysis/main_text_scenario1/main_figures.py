@@ -291,7 +291,8 @@ def Fig5AC():
     
 #------------------------------------------------    
 
-#Fig.4D: Correlation of non-monotonicity and distances between critical toxin sensitivities
+#Fig.A14: Correlation of non-monotonicity and distances between critical toxin sensitivities
+# This figure was previously shown in the main text but now in the appendix
 def NonMonotonicity(data):
     sign_prev=0
     for i in range(np.size(data)-1):
